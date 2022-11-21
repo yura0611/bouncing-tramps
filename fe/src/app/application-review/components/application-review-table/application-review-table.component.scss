@@ -1,0 +1,88 @@
+.full-width-table {
+  width: 100%;
+}
+
+.vacancies-table {
+  max-height: 70vh;
+  overflow: auto;
+
+  &-style {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    color: black;
+    text-transform: uppercase;
+    box-shadow: 5px 3px 6px 1px rgb(0 0 0 / 30%);
+
+    &-status-bg {
+      color: white;
+      text-transform: uppercase;
+      padding: 2px 4px;
+      width: 39px;
+      height: 17px;
+      font-size: 9px;
+      font-weight: 700;
+      border-radius: 2px;
+    }
+  }
+}
+
+.vacancies-table::-webkit-scrollbar {
+  width: 12px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.vacancies-table::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  background-color: #ccc;
+}
+
+.vacancies-table::-webkit-scrollbar-button,
+.vacancies-table::-webkit-scrollbar-track,
+.vacancies-table::-webkit-scrollbar-track-piece,
+.vacancies-table::-webkit-scrollbar-corner,
+.vacancies-table::-webkit-resizer {
+  display: none;
+}
+
+tr.mat-row:hover {
+  background: var(--row-hover);
+  cursor: pointer;
+}
+
+.mat-column {
+  &-title {
+    width: 50%;
+  }
+
+  &-type,
+  &-candidate,
+  &-opened {
+    width: 16%;
+  }
+}
+
+.arrow {
+  display: none;
+  margin-left: 20%;
+  vertical-align: inherit;
+}
+
+tr.mat-row:hover .arrow {
+  display: inline-block;
+}
+
+.empty-message {
+  font-family: Raleway, sans-serif;
+  color: var(--primary-color);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 22px 0;
+}

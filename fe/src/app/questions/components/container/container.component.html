@@ -1,0 +1,160 @@
+<div class="library-question container">
+  <div class="header_title">
+    <h2 class="title">Library questions</h2>
+    <app-dialog [dialogName]="dialogValue">
+      <button (click)="dialogChange('create')" class="button_create" mat-raised-button>
+        Create new
+      </button>
+    </app-dialog>
+  </div>
+  <div class="block">
+    <div class="left_block">
+      <mat-card class="card_left_title"
+        ><div class="filter_settings">
+          <span>Filter Settings</span>
+          <mat-icon (click)="resetFilterSettings()">replay</mat-icon>
+        </div></mat-card
+      >
+      <mat-card class="form_left card_left">
+        <form>
+          <div class="form_group">
+            <label>Title</label><br />
+            <input
+              type="text"
+              class="fname"
+              name="fname"
+              placeholder="Type question name"
+              [(ngModel)]="fname"
+              [ngModelOptions]="{standalone: true}"
+            /><br />
+          </div>
+          <div class="form_group">
+            <label class="label_select">Type</label><br />
+            <mat-form-field
+              style="margin-bottom: -1.25em; padding: 0.4em 0px"
+              class="select_option"
+              appearance="outline"
+            >
+              <mat-select
+                class="custom"
+                panelClass="mat-select-panel-class"
+                placeholder="Select question type"
+                [(ngModel)]="type"
+                [ngModelOptions]="{standalone: true}"
+                disableRipple
+              >
+                <mat-option *ngFor="let option of typeOptions" [value]="option">{{
+                  option
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form_group">
+            <app-topics
+              (topicEvent)="getTopicEvent($event)"
+              (randomEvent)="getRandomEvent($event)"
+              [validateFalse]="false"
+              [reset]="reset"
+            ></app-topics>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+    <div class="right_block">
+      <mat-card class="card_right_title">
+        <span class="questions_length"
+          >Questions ({{
+            (questions | filterQuestions: fname:type:topic:random:refreshCount)?.length
+          }})</span
+        >
+        <div class="time-header" (click)="sortTime()">
+          <span class="text_time">time, min</span>
+          <mat-icon [class.arrow_rotate]="rotate" class="time">arrow_downward</mat-icon>
+        </div>
+      </mat-card>
+      <mat-card class="card_right">
+        <p
+          *ngIf="
+            !(questions | filterQuestions: fname:type:topic:random:refreshCount)?.length;
+            else question_block
+          "
+          class="no_questions"
+          style="margin-top: 40px"
+        >
+          NO QUESTIONS YET
+        </p>
+        <ng-template #question_block>
+          <div
+            class="questions"
+            *ngFor="
+              let question of questions | filterQuestions: fname:type:topic:random:refreshCount;
+              trackBy: identifyById
+            "
+          >
+            <div class="question_title">
+              <div>
+                <span class="title_hiden">{{ question.title }}</span>
+              </div>
+              <div class="question_id">
+                {{ question.maxLength }}
+              </div>
+            </div>
+            <div class="question_topics">
+              <div class="question_name">
+                <div>
+                  <img
+                    *ngIf="question.type === 'code'"
+                    src="../../../../assets/img/type.svg"
+                    alt=""
+                  />
+                  <img
+                    *ngIf="question.type === 'text'"
+                    src="../../../../assets/img/text.svg"
+                    alt=""
+                  />
+                </div>
+                <div class="questions_topic" *ngFor="let topic of question.topics">
+                  <div>
+                    {{ topic }}
+                  </div>
+                </div>
+              </div>
+              <div class="question_delete">
+                <app-dialog
+                  [dialogEdit]="question"
+                  [dialogTitleRemove]="question.title"
+                  [dialogName]="dialogValue"
+                >
+                  <mat-icon
+                    (click)="dialogChange('delete')"
+                    matTooltip="Delete"
+                    matTooltipClass="my_tooltips"
+                    aria-label="Button that displays a tooltip when focused or hovered over"
+                    class="icon_brackets"
+                    >delete
+                  </mat-icon>
+                </app-dialog>
+              </div>
+            </div>
+            <div class="question_decs">
+              <div>
+                <span class="decs_hiden">{{ question.description }}</span>
+              </div>
+              <app-dialog [dialogEdit]="question" [dialogName]="dialogValue">
+                <mat-icon
+                  (click)="dialogChange('edit', question.isActive, question._id)"
+                  matTooltip="Edit"
+                  matTooltipClass="my_tooltips"
+                  aria-label="Button that displays a tooltip when focused or hovered over"
+                  class="icon_brackets icon_edit"
+                >
+                  edit
+                </mat-icon>
+              </app-dialog>
+            </div>
+          </div>
+        </ng-template>
+      </mat-card>
+    </div>
+  </div>
+</div>

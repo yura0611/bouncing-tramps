@@ -1,0 +1,93 @@
+.invite-msg {
+  font-size: 14px;
+}
+
+.user-popup {
+  background: var(--secondary-color);
+  border-radius: 2px;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  height: 40px;
+  max-width: 300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+}
+
+.user-popup_success {
+  background: var(--primary-color);
+}
+
+.mat-dialog-content {
+  overflow: unset;
+}
+
+.dialog-container {
+  position: relative;
+}
+
+.form-group {
+  padding-bottom: 19px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .form-input {
+    max-width: 100%;
+    margin: 4px 0;
+    padding: 5px 9px;
+    border: 2px solid #2e2d2d;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    &:focus {
+      border-color: var(--primary-color);
+      outline: var(--primary-color);
+    }
+  }
+
+  .input-error {
+    color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.form-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0;
+
+  .invite-button {
+    width: 89px;
+    height: 40px;
+    background: var(--primary-color);
+    border-radius: 2px;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

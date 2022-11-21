@@ -1,0 +1,78 @@
+.container {
+  max-width: 1470px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.app_title {
+  font-family: Raleway, sans-serif;
+  margin-bottom: 39px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 38px;
+  color: var(--primary-color);
+}
+
+.logo {
+  width: 65px;
+  margin: 0 auto 18px;
+}
+
+.sign_in {
+  padding-top: 249px;
+  text-align: center;
+
+  &__section {
+    display: block;
+    margin: 0 auto;
+    max-width: 684px;
+    width: 100%;
+    padding: 40px 40px 34px;
+    background: #fff;
+    box-shadow: 0 4px 25px rgba(0, 184, 178, 5%), 0 4px 25px rgba(0, 0, 0, 5%);
+  }
+
+  &__text {
+    font-family: "Open Sans", sans-serif;
+    margin-bottom: 22px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #101820;
+
+    & span {
+      color: var(--secondary-color);
+    }
+  }
+
+  &__btn {
+    margin-bottom: 22px;
+    font-family: Raleway, sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 2px;
+    overflow: visible;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+  }
+
+  &__copyright {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    margin-top: 40px;
+    font-style: normal;
+    font-size: 11px;
+    line-height: 15px;
+    text-transform: uppercase;
+    color: #aaa;
+  }
+}

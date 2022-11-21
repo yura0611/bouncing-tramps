@@ -1,0 +1,16 @@
+<div class="vacancy-nav">
+  <button mat-raised-button class="btn btn-add" routerLink="add">add new</button>
+  <div class="vacancy-nav-info">
+    <div class="vacancy-nav-text">
+      Applications need review<span class="vacancy-nav-info-number">{{ appNeedReview }}</span>
+    </div>
+    <button mat-raised-button class="btn btn-review" routerLink="need-review">review</button>
+  </div>
+</div>
+<app-table-vacancies-list></app-table-vacancies-list>
+
+<ng-container>
+  <div *ngIf="logined" class="success-area">
+    <div class="success">You have successfully logged in!</div>
+  </div>
+</ng-container>

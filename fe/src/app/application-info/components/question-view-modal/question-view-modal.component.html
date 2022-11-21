@@ -1,0 +1,64 @@
+<div class="overlap-container">
+  <div class="title-info" (click)="status = !status">
+    <h3 class="title-info__text">{{ currentAnswer.question.title }}</h3>
+    <h3 class="title-info__text">{{ currentAnswer.question.maxLength! | hours }}</h3>
+  </div>
+  <div class="question" [ngClass]="status ? 'show' : 'hide'">
+    <p class="question__text">
+      {{ currentAnswer.question.description }}
+    </p>
+    <div class="question__footer">
+      <img
+        *ngIf="currentAnswer.question.type === 'text'"
+        src="../../../../assets/img/text.svg"
+        alt="text"
+      />
+      <img
+        *ngIf="currentAnswer.question.type === 'code'"
+        src="../../../../assets/img/type.svg"
+        alt="code"
+      />
+      <div *ngFor="let topic of currentAnswer.question.topics" class="question__topic">
+        {{ topic }}
+      </div>
+    </div>
+  </div>
+
+  <div class="title-info">
+    <h3 class="title-info__text">answer</h3>
+    <h3 class="title-info__text">{{ currentAnswer.completionTime | hours }}</h3>
+  </div>
+
+  <div class="answer">
+    <p class="answer__text">
+      {{ currentAnswer.candidateAnswer }}
+    </p>
+  </div>
+  <div class="evaluation">
+    <button [ngClass]="{no_button: answerInd === 0}" mat-icon-button>
+      <mat-icon (click)="nextAnswer(-1)">keyboard_arrow_left</mat-icon>
+    </button>
+    <span class="evaluation__mark">Mark</span>
+    <div class="evaluation__container">
+      <div class="scale">
+        <ng-container *ngFor="let mark of marks">
+          <div
+            class="scale__number"
+            (mouseenter)="starEnter(mark)"
+            (mouseleave)="starLeav()"
+            (click)="starClicked(mark)"
+            [ngClass]="{activeMark: hoverState >= mark}"
+          >
+            <button class="scale__number__btn" [ngClass]="{pressedMark: mark === rating}">
+              {{ mark }}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+      <div class="scale__info"><span>No answer</span><span>The answer is correct</span></div>
+    </div>
+    <button mat-icon-button [ngClass]="{no_button: answerInd + 1 === evalWindow.modalData.length}">
+      <mat-icon (click)="nextAnswer(1)">keyboard_arrow_right</mat-icon>
+    </button>
+  </div>
+</div>

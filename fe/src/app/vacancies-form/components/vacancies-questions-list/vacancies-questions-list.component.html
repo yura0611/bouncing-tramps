@@ -1,0 +1,76 @@
+<div class="questions-table mat-elevation-z8">
+  <div class="test">
+    <div class="masthead">
+      <p class="masthead-title">Library questions</p>
+      <div><mat-icon (click)="createQuestion()" class="masthead-title-add">add</mat-icon></div>
+      <form action="" class="masthead-search">
+        <label for="masthead-search-toggle" class="masthead-search-toggle">Toggle Search</label>
+        <input
+          type="checkbox"
+          id="masthead-search-toggle"
+          class="isHidden"
+          (click)="openSearch()"
+        />
+        <div class="masthead-search-indicator"></div>
+        <div class="masthead-search-search">
+          <label for="masthead-search-search" class="isHidden">Search</label>
+          <input
+            [appDatoAutoFocus]="toggleSearch"
+            type="search"
+            placeholder="Search"
+            id="masthead-search-search"
+            [(ngModel)]="query"
+            [ngModelOptions]="{standalone: true}"
+            autocomplete="off"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <table class="questions-table">
+    <thead>
+      <div class="questions questions-header">
+        <div callspan="2" class="questions-title">questions</div>
+        <div class="questions-title time">time, min</div>
+      </div>
+    </thead>
+    <tbody class="questions-body">
+      <tr
+        *ngFor="let item of questions | async | searchFilter: query"
+        class="questions"
+        [class.disable]="selectedItems?.includes(item._id)"
+      >
+        <td class="questions-ico">
+          <mat-icon (click)="openDialog(item)" class="questions-ico-item">visibility</mat-icon>
+          <mat-icon (click)="addToTask(item)" class="questions-ico-item-add">arrow_back</mat-icon>
+        </td>
+        <td class="questions-content">
+          {{ item.title }}
+          <div class="questions-tags">
+            <span
+              ><mat-icon
+                class="questions-ico-item-type questions-ico-item-type-code"
+                *ngIf="item.type === 'code'"
+                >code</mat-icon
+              ></span
+            >
+            <span
+              ><mat-icon
+                class="questions-ico-item-type questions-ico-item-type-text"
+                *ngIf="item.type === 'text'"
+                >short_text</mat-icon
+              ></span
+            >
+
+            <div class="questions-tags-item" *ngFor="let topics of item.topics">
+              {{ topics }}
+            </div>
+          </div>
+        </td>
+
+        <td class="questions-content-time">{{ item.maxLength }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

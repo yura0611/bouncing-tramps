@@ -1,0 +1,53 @@
+image: node:latest
+
+.only-envs:
+  only:
+    - dev
+
+.only-merge-requests:
+  only:
+    - merge_requests
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+stages:
+  - prepare
+  - lint
+  - build
+  - deploy
+
+prepare:
+  extends: .only-merge-requests
+  stage: prepare
+  script:
+    - npm i
+
+lint:
+  extends: .only-merge-requests
+  stage: lint
+  script:
+    - npm run lint
+
+build:
+  extends: .only-envs
+  stage: build
+  before_script:
+    - npm update
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - ./dist
+
+deploy_code:
+  extends: .only-envs
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 rm s3://$S3_BUCKET --recursive
+    - aws s3 cp ./dist/tc-frontend/ s3://$S3_BUCKET --recursive --include "*"

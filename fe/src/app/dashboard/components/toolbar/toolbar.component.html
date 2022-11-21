@@ -1,0 +1,22 @@
+<div class="toolbar">
+  <div class="toolbar__container">
+    <mat-toolbar class="mat-toolbar">
+      <a class="toolbar__link" routerLink="/vacancies" mat-button routerLinkActive="active"
+        >Vacancies</a
+      >
+      <a class="toolbar__link" mat-button routerLink="/questions" routerLinkActive="active"
+        >Questions</a
+      >
+      <a class="toolbar__link" mat-button routerLink="/settings" routerLinkActive="active"
+        >System settings</a
+      >
+      <div class="icon" (click)="toggle()" (click)="$event.stopPropagation()">
+        <img class="person-icon" src="{{ userAvatar }}" alt="User's avatar" />
+        <a routerLink="/signin" class="log-out-block" *ngIf="condition" (click)="logOut()">
+          <mat-icon aria-hidden="false" aria-label="Example home icon">logout</mat-icon>
+          <span class="logout-text">Log out</span>
+        </a>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>

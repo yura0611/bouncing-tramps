@@ -1,0 +1,66 @@
+.vacancy-nav {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+
+  &-info {
+    display: flex;
+    align-items: center;
+
+    &-number {
+      font-family: 'Nexa Bold', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--secondary-color);
+      padding: 0 29px 0 8px;
+    }
+  }
+
+  &-text {
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+  }
+}
+
+.btn {
+  min-width: 110px;
+  padding: 0 20px;
+  height: 40px;
+  text-transform: uppercase;
+  font-family: Raleway, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+
+  &-add {
+    color: white;
+    background: var(--primary-color);
+  }
+
+  &-review {
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+  }
+}
+
+.success {
+  position: fixed;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  width: fit-content;
+  border-radius: 2px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  background-color: var(--success-popup);
+  text-align: center;
+  padding: 12px 30px;
+  margin: 0 auto;
+
+  &-area {
+    padding: 16px 0 40px;
+    height: 45px;
+  }
+}

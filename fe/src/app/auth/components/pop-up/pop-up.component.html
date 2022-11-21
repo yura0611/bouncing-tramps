@@ -1,0 +1,8 @@
+<!-- <div [attr.color]="color" class="pop-up">
+  {{ popUpText }}
+</div> -->
+<div *ngIf="success" class="pop-up pop-up__success">'You have successfully logged in!'</div>
+<div *ngIf="!success" class="pop-up pop-up__error">'Error! User does not exist on database!'</div>
+<!-- <div class="pop-up pop-up__error">
+  <p>'Error! User does not exist on database!'</p>
+</div> -->

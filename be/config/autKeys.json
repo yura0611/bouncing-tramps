@@ -1,0 +1,9 @@
+{
+    "google": {
+      "CLIENT_ID": "1013844578345-3it6de6qe5fcoufhs567plhdf3u1obv5.apps.googleusercontent.com"
+    },
+    "jwt": {
+      "secret": "longing-rusted-seventeen-daybreak"
+    }
+  }
+

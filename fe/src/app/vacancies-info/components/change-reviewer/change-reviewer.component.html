@@ -1,0 +1,62 @@
+<p class="invite-msg">Please, write email to find reviewer</p>
+
+<div class="form-group">
+  <form
+    autocomplete="off"
+    [formGroup]="changeReviewerForm"
+    class="formContainer"
+    (ngSubmit)="submit()"
+  >
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        class="form-input"
+        placeholder="pat@example.com"
+        type="text"
+        formControlName="email"
+        name="email"
+        [matAutocomplete]="auto"
+        required
+        (blur)="onBlur()"
+        (focus)="onFocus()"
+        #search
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="chooseReviewer($event)"
+        [displayWith]="displayFn"
+      >
+        <mat-option *ngFor="let reviewer of reviewers" [value]="reviewer">
+          <mat-icon mat-icon aria-hidden="false">person</mat-icon>
+          {{ reviewer.firstName }} {{ reviewer.lastName }}
+        </mat-option>
+      </mat-autocomplete>
+      <small
+        class="form_error"
+        *ngIf="
+          changeReviewerForm.controls['email'].touched &&
+          changeReviewerForm.controls['email'].dirty &&
+          changeReviewerForm.controls['email'].hasError('required')
+        "
+      >
+        Field can't be empty
+      </small>
+      <small
+        class="form_error"
+        *ngIf="
+          changeReviewerForm.controls['email'].touched &&
+          changeReviewerForm.controls['email'].dirty &&
+          changeReviewerForm.controls['email'].hasError('email')
+        "
+      >
+        Invalid email
+      </small>
+    </div>
+    <div class="form-btn-container" mat-dialog-actions>
+      <button mat-button (click)="submit()" class="btn btn-save">Save</button>
+    </div>
+  </form>
+</div>
+
+<app-pop-up *ngIf="isPopupShowed" [success]="popupStatus" [message]="currentMessage"></app-pop-up>

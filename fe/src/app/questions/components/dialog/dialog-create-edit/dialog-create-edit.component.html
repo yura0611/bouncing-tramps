@@ -1,0 +1,144 @@
+<form [formGroup]="formCreateEdit" (ngSubmit)="onSubmit()">
+  <div mat-dialog-container class="dialog_container" style="padding: 0">
+    <div mat-dialog-title class="dialog_title">
+      <div *ngIf="name === 'create'" class="new_question">New Question</div>
+      <div *ngIf="name === 'edit'" class="new_question">Edit Question</div>
+      <div *ngIf="name === 'view'" class="new_question">Question</div>
+
+      <div>
+        <mat-icon mat-dialog-close class="icon_brackets fas fa-times">clear</mat-icon>
+      </div>
+    </div>
+    <div class="dialog-content" mat-dialog-content>
+      <div class="form_group">
+        <div class="title_raw">
+          <label>Title</label>
+          <div *ngIf="name === 'create' || name === 'edit'">
+            <small class="form_error" *ngIf="titleForm!.hasError('maxlength') && eventButton"
+              >Title is too long</small
+            >
+            <small class="form_error" *ngIf="titleForm!.hasError('minlength') && eventButton">
+              Title is too short</small
+            >
+            <small
+              class="form_error"
+              *ngIf="titleForm!.hasError('required') && titleForm!.touched && eventButton"
+              >Filed can't be empty</small
+            >
+          </div>
+        </div>
+        <input
+          *ngIf="name === 'create' || name === 'edit'"
+          placeholder="Type question title"
+          type="text"
+          formControlName="controlTitle"
+        />
+        <span class="title_view" *ngIf="name === 'view'">{{ data.edit?.title }}</span>
+      </div>
+      <div class="form_group">
+        <label [ngClass]="{label_view: name === 'view'}">Description</label>
+        <textarea
+          rows="3"
+          cdkTextareaAutosize
+          class="desc_textarea"
+          *ngIf="name === 'create' || name === 'edit'"
+          placeholder="Type text"
+          type="text"
+          formControlName="controlDecs"
+          >{{ data.edit?.description }}</textarea
+        ><br />
+        <p *ngIf="name === 'view'" class="description_view">{{ data.edit?.description }}</p>
+        <div *ngIf="name === 'create' || name === 'edit'">
+          <small
+            class="form_error"
+            *ngIf="descForm?.hasError('required') && descForm?.touched && eventButton"
+            >Filed can't be empty</small
+          >
+          <small class="form_error" *ngIf="descForm!.hasError('minlength') && eventButton"
+            >Description is too short</small
+          >
+          <small class="form_error" *ngIf="descForm!.hasError('maxlength') && eventButton"
+            >Description is too long</small
+          >
+        </div>
+      </div>
+
+      <div class="form_group">
+        <label class="label_select">Type</label><br />
+        <mat-form-field
+          *ngIf="name === 'edit' || name === 'create'"
+          style="margin-bottom: -1.25em"
+          class="select_option"
+          appearance="outline"
+        >
+          <mat-select
+            panelClass="mat-select-panel-class"
+            placeholder="Select question type"
+            formControlName="controlType"
+            (selectionChange)="changeOption($event.value)"
+          >
+            <mat-option *ngFor="let option of typeOptions" [value]="option">{{
+              option
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="name === 'edit' || name === 'create'">
+          <small
+            class="form_error form_type_error"
+            *ngIf="!option && typeForm!.touched && eventButton"
+            >Filed can't be empty</small
+          >
+        </div>
+        <div *ngIf="name === 'view'" class="view_type">{{ data.edit?.type }}</div>
+      </div>
+      <div class="form_group form_topics">
+        <app-topics
+          *ngIf="name === 'create' || name === 'edit'"
+          [validateFalse]="true"
+          [EditTopics]="EditTopics"
+          (topicsvalid)="validateTopics($event)"
+        ></app-topics>
+        <div *ngIf="name === 'view'" class="view_topics">
+          <label class="label_select">Topics</label><br />
+          <div class="topic_type">{{ EditTopics }}</div>
+        </div>
+      </div>
+      <label class="label_select">Max length</label><br />
+      <div class="form_group time" *ngIf="name === 'create' || name === 'edit'">
+        <div class="time_column">
+          <div class="time_row">
+            <div class="time_block" (click)="timeChange(15, 'min')">
+              <span class="time_plus">+</span> <span class="time_text">15 min</span>
+            </div>
+            <div class="time_block" (click)="timeChange(30, 'min')">+ 30 min</div>
+          </div>
+          <div class="time_row">
+            <div class="time_block" (click)="timeChange(1, 'hour')">+ 1 hour</div>
+            <div class="time_block" (click)="timeChange(8, 'hour')">+ 8 hour</div>
+          </div>
+        </div>
+        <div class="time_selected">
+          <div class="time_res" #timeRes>
+            {{ time * 60 * 1000 | date: 'HH:mm:ss':'UTC' }}
+          </div>
+          <div class="time_icon">
+            <mat-icon (click)="timeAdd()" class="plus">add</mat-icon>
+            <mat-icon (click)="timeMinus()" class="minus">remove</mat-icon>
+          </div>
+        </div>
+        <small *ngIf="!time && time_valid && !time_greater" class="time_error"
+          >Filed can't be empty</small
+        >
+        <small *ngIf="time_greater" class="time_error">Can't be greater than 8 hour</small>
+      </div>
+      <div class="time_view" *ngIf="name === 'view'">
+        {{ time * 60 * 1000 | date: 'HH:mm:ss':'UTC' }}
+      </div>
+    </div>
+    <div *ngIf="name === 'create' || name === 'edit'" class="button_save" mat-dialog-actions>
+      <button #submit type="submit" class="button_create" mat-button>
+        {{ name === 'edit' ? 'Save' : 'Create' }}
+      </button>
+    </div>
+  </div>
+</form>

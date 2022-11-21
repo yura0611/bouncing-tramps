@@ -1,0 +1,168 @@
+.vacancy {
+  &-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 11px 5px 18px;
+  }
+
+  &-title {
+    font-family: Raleway, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+  }
+
+  &-btnsave {
+    height: 40px;
+    padding: 0 21px;
+    text-transform: uppercase;
+    font-family: Raleway, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    background: var(--primary-color);
+  }
+
+  &-container {
+    &-form {
+      box-sizing: border-box;
+      background: #fff;
+      min-width: 374px;
+      padding: 19px 21px 1px 19px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    &-task {
+      margin-bottom: 30px;
+    }
+
+    &-questions {
+      margin-bottom: 30px;
+    }
+
+    @media (min-width: 768px) {
+      display: flex;
+
+      &-form {
+        margin-bottom: 0;
+      }
+
+      &-task {
+        margin: 0 10px;
+      }
+
+      &-questions {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.mat-raised-button.mat-button-disabled:not([class*='mat-elevation-z']) {
+  background: var(--row-hover);
+  color: white;
+}
+
+.input-group {
+  margin-bottom: 10px;
+}
+
+.input-label {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  display: block;
+  margin: 0 0 5px 5px;
+  color: #101820;
+}
+
+.input-control {
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 6px 1px 6px 8px;
+  width: 100%;
+  border: 2px solid #ddd;
+  border-radius: 2px;
+  box-sizing: border-box;
+
+  &:hover {
+    border: 2px solid black;
+  }
+
+  &:focus {
+    outline: none;
+    border: 2px solid var(--primary-color);
+  }
+
+  &[type='url'] {
+    width: 100%;
+    color: var(--primary-color);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    text-decoration: underline;
+
+    &::placeholder {
+      text-decoration: underline overline white;
+    }
+  }
+}
+
+.input-error {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  color: red;
+  margin-bottom: 5px;
+  padding-top: 10px;
+}
+
+.input-group textarea {
+  min-height: 200px;
+  resize: none;
+}
+
+.input-group-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chars {
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  text-align: right;
+  color: #999;
+}
+
+.error {
+  box-sizing: border-box;
+  width: fit-content;
+  border-radius: 2px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  background-color: var(--secondary-color);
+  text-align: center;
+  padding: 12px 30px;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  left: 0;
+
+  &-area {
+    padding: 16px 0 40px;
+    height: 45px;
+  }
+}
+
+.show-error {
+  display: block;
+}

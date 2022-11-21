@@ -1,0 +1,28 @@
+image: node:latest
+
+.only-envs:
+  only:
+    - dev
+
+stages:
+  - compress
+  - deploy
+
+compress:
+  extends: .only-envs
+  stage: compress
+  script:
+    - archive=$(npm pack)
+    - mv $archive tc-backend.tgz
+  artifacts:
+    paths:
+      - tc-backend.tgz
+
+deploy_code:
+  extends: .only-envs
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 cp ./tc-backend.tgz s3://$S3_BUCKET/tc-backend.tgz

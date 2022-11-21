@@ -1,0 +1,58 @@
+<div class="dialog" *ngIf="currentQuestion">
+  <header class="dialog-header">
+    <h2 mat-dialog-title class="dialog-title">
+      Question {{ currentQuestion.index + 1 }}/{{ questionsCount }}
+    </h2>
+    <mat-icon mat-dialog-close (click)="onClose()" class="dialog-close">clear</mat-icon>
+  </header>
+  <mat-divider class="dialog-divider"></mat-divider>
+  <form
+    *ngIf="currentQuestion.info as questionInfo"
+    [formGroup]="passingTestForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <p class="dialog-content question-title">
+      {{ questionInfo.title }}
+      <span>{{ questionInfo.maxLength! | hours }}</span>
+    </p>
+    <mat-divider class="dialog-divider"></mat-divider>
+    <section class="question-description dialog-content">
+      <p>
+        {{ questionInfo.description }}
+      </p>
+      <div class="topics">
+        <mat-icon class="topic-icon">article</mat-icon>
+        <span *ngFor="let topic of questionInfo.topics" class="topic">{{ topic }}</span>
+      </div>
+    </section>
+    <mat-divider class="dialog-divider"></mat-divider>
+    <p class="dialog-content question-title">Answer</p>
+    <mat-divider class="dialog-divider"></mat-divider>
+    <mat-form-field class="dialog-content answer" hideRequiredMarker>
+      <mat-label>Your answer</mat-label>
+      <textarea formControlName="answer" rows="7" matInput class="answer-input" required></textarea>
+    </mat-form-field>
+    <mat-divider class="dialog-divider"></mat-divider>
+    <mat-dialog-actions class="dialog-actions">
+      <button
+        *ngIf="currentQuestion.index + 1 !== questionsCount"
+        type="submit"
+        mat-flat-button
+        class="next-btn"
+        [disabled]="!passingTestForm.valid"
+      >
+        NEXT
+        <mat-icon class="chevron">chevron_right</mat-icon>
+      </button>
+      <button
+        *ngIf="currentQuestion.index + 1 === questionsCount"
+        type="submit"
+        mat-flat-button
+        class="next-btn"
+        [disabled]="!passingTestForm.valid"
+      >
+        DONE
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

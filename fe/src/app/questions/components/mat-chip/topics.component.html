@@ -1,0 +1,43 @@
+<label class="label_topics" for="topics">Topics</label><br />
+<form>
+  <mat-form-field style="width: 100%; position: relative" appearance="outline">
+    <mat-chip-list #chipList aria-label="Topics selection">
+      <mat-chip
+        [(ngModel)]="EditTopics"
+        [ngModelOptions]="{standalone: true}"
+        class="chip"
+        ngDefaultControl
+        *ngFor="let topic of topics"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(topic)"
+      >
+        {{ topic }}
+        <button matChipRemove *ngIf="removable">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+        class="mat_input"
+        placeholder="Type text"
+        #topicInput
+        [formControl]="topicCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"
+      />
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let topic of filteredTopics | async" [value]="topic">
+        {{ topic }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+<div *ngIf="validateFalse">
+  <small class="error_topic" *ngIf="!topics!.length && eventButton">
+    Must be minimum one topic
+  </small>
+  <small class="error_topic" *ngIf="topics!.length > 5"> Maximum 5 topics </small>
+</div>

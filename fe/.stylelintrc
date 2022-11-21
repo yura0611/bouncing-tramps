@@ -1,0 +1,11 @@
+{
+  "extends": "stylelint-config-standard",
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "at-rule-empty-line-before": null,
+    "no-empty-source": null,
+    "string-quotes": null,
+    "selector-class-pattern": null,
+    "color-function-notation": null
+  }
+}

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="sign_in">
+    <h1 color="primary" class="app_title">Hire Helper</h1>
+    <div class="sign_in__section">
+      <div class="sign_in-wrapper">
+        <p class="sign_in__text">Authorize with your <span>@gmail.com</span> email</p>
+        <button
+          id="googleBtn"
+          class="g-signin2 sign_in__btn"
+          (click)="signIn()"
+        >
+          sign in with google
+        </button>
+      </div>
+    </div>
+    <p class="sign_in__copyright">© hire helper 2022</p>
+    <app-pop-up *ngIf="user !== undefined" [success]="success"></app-pop-up>
+  </div>
+</div>

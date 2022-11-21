@@ -1,0 +1,9 @@
+{
+  "server": {
+    "port": 8082
+  },
+  "database": {
+    "srv": "mongodb+srv://university:University123@university.4ek0esg.mongodb.net/recruiterdb?retryWrites=true&w=majority"
+  },
+  "firebase": {}
+}

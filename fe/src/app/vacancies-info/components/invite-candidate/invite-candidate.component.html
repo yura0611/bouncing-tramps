@@ -1,0 +1,98 @@
+<p class="invite-msg" *ngIf="newCandidate">Please, write email to find candidate</p>
+<p class="invite-msg" *ngIf="!newCandidate">Please, check details</p>
+
+<form [formGroup]="inviteCandidateForm" autocomplete="off" (ngSubmit)="onSubmit()">
+  <div mat-dialog-container class="dialog-container">
+    <div class="dialog-content" mat-dialog-content>
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          class="form-input"
+          type="text"
+          formControlName="email"
+          placeholder="Type email"
+          [matAutocomplete]="auto"
+          required
+          #search
+        />
+        <mat-autocomplete
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+          (optionSelected)="chooseCandidate($event)"
+          [displayWith]="displayFn"
+        >
+          <mat-option *ngFor="let candidate of candidates" [value]="candidate">
+            <mat-icon mat-icon aria-hidden="false">person</mat-icon>
+            {{ candidate.firstName }} {{ candidate.lastName }}
+          </mat-option>
+        </mat-autocomplete>
+        <small
+          class="input-error"
+          *ngIf="
+            this.inviteCandidateForm.controls.email.hasError('required') &&
+            this.inviteCandidateForm.controls.email.touched
+          "
+          >Field can't be empty</small
+        >
+        <small
+          class="input-error"
+          *ngIf="this.inviteCandidateForm.controls.email.hasError('email')"
+        >
+          Invalid email</small
+        >
+      </div>
+      <div class="form-group">
+        <label>First Name</label>
+        <input
+          class="form-input"
+          type="text"
+          formControlName="firstName"
+          placeholder="Type first name"
+        />
+        <small
+          class="input-error"
+          *ngIf="
+            this.inviteCandidateForm.controls.firstName.hasError('required') &&
+            this.inviteCandidateForm.controls.firstName.touched
+          "
+          >Field can't be empty</small
+        >
+        <small
+          class="input-error"
+          *ngIf="this.inviteCandidateForm.controls.firstName.hasError('minlength')"
+        >
+          First Name is too short</small
+        >
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input
+          class="form-input"
+          type="text"
+          formControlName="lastName"
+          placeholder="Type last name"
+        />
+        <small
+          class="input-error"
+          *ngIf="
+            this.inviteCandidateForm.controls.lastName.hasError('required') &&
+            this.inviteCandidateForm.controls.lastName.touched
+          "
+          >Field can't be empty</small
+        >
+        <small
+          class="input-error"
+          *ngIf="this.inviteCandidateForm.controls.lastName.hasError('minlength')"
+        >
+          Last Name is too short</small
+        >
+      </div>
+      <div class="form-btn-container" mat-dialog-actions>
+        <button #submit type="submit" class="invite-button" mat-button>Invite</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div *ngIf="isCandidate" class="user-popup">'User is already in the list'</div>
+<div *ngIf="invitedCandidate" class="user-popup user-popup_success">'Successfully invited'</div>

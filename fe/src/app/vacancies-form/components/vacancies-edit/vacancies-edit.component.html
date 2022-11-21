@@ -1,0 +1,52 @@
+<div class="questions-table mat-elevation-z8">
+  <table class="questions-table">
+    <thead>
+      <div class="questions questions-header">
+        <th callspan="2" class="questions-title">Task questions ({{ itemsEdit.length }})</th>
+        <th class="questions-title time"></th>
+      </div>
+    </thead>
+    <tbody class="questions-body">
+      <td class="empty-message" colspan="2" *ngIf="itemsEdit.length === 0">
+        No task questions yet
+      </td>
+      <tr *ngFor="let item of itemsEdit" class="questions">
+        <div class="questions-content-area">
+          <div class="questions-ico">
+            <mat-icon (click)="openDialog(item)" class="questions-ico-item">visibility</mat-icon>
+          </div>
+          <td class="questions-content">
+            {{ item.title }}
+            <div class="questions-tags">
+              <span
+                ><mat-icon
+                  class="questions-ico-item-type questions-ico-item-type-code"
+                  *ngIf="item.type === 'code'"
+                  >code</mat-icon
+                ></span
+              >
+              <span
+                ><mat-icon
+                  class="questions-ico-item-type questions-ico-item-type-text"
+                  *ngIf="item.type === 'text'"
+                  >short_text</mat-icon
+                ></span
+              >
+              <div class="questions-tags-item" *ngFor="let topics of item.topics">{{ topics }}</div>
+            </div>
+          </td>
+        </div>
+
+        <td class="questions-content-time">{{ item.maxLength }}</td>
+      </tr>
+    </tbody>
+
+    <ng-container>
+      <th class="empty-message" *matNoDataRow [attr.colspan]="4">No vacancies yet</th>
+    </ng-container>
+  </table>
+</div>
+<div class="total">
+  <span class="total-title">total time</span>
+  <span class="total-value">{{ minutes }} min</span>
+</div>

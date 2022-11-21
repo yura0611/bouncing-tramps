@@ -1,0 +1,266 @@
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
+@include mat.core();
+
+$primary-color: (
+  500: #4056A1,
+  contrast: (
+    500: white
+  )
+);
+
+$accent-color: (
+  500: #e0004d,
+  contrast: (
+    500: white
+  )
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$tc-frontend-primary: mat.define-palette($primary-color);
+$tc-frontend-accent: mat.define-palette($accent-color);
+
+// The warn palette is optional (defaults to red).
+$tc-frontend-warn: mat.define-palette(mat.$red-palette);
+
+$tc-typography: mat.define-typography-config(
+  $font-family: '"Open Sans", sans-serif'
+);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$tc-frontend-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $tc-frontend-primary,
+      accent: $tc-frontend-accent,
+      warn: $tc-frontend-warn
+    ),
+    typography: $tc-typography
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($tc-frontend-theme);
+
+/* You can add global styles to this file, and also import other style files */
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
+$OpenSans: 'Open Sans', sans-serif;
+
+$NexaBold: 'Nexa', sans-serif;
+
+$RobotoMono: 'Roboto Mono', monospace;
+
+$Raleway: 'Raleway', sans-serif;
+
+$OpenSans: 'Open Sans', sans-serif;
+
+$NexaBold: 'Nexa', sans-serif;
+
+$RobotoMono: 'Roboto Mono', monospace;
+
+$Raleway: 'Raleway', sans-serif;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $OpenSans;
+  letter-spacing: normal;
+  box-sizing: border-box;
+  background: #fafafa;
+}
+@font-face {
+  font-family: 'Nexa';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  font-stretch: expanded;
+  src: url('./assets/fonts/NexaBold/NexaBold.woff2') format('woff2');
+  unicode-range: U+0410-044F, U+0020-007E;
+}
+
+.my-dialog-example {
+  mat-dialog-container {
+    padding: 0;
+    overflow-x: hidden;
+    width: 496px;
+    height: 700px;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 8px;
+      border-radius: 4px;
+      background-color: white;
+      margin: 2px;
+    }
+
+    &::-webkit-scrollbar-button,
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-track-piece,
+    &::-webkit-scrollbar-corner,
+    &::-webkit-resizer {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 30px;
+      background-color: #ccc;
+    }
+  }
+
+  mat-dialog-content {
+    padding: 0 50px;
+    overflow-y: auto;
+  }
+}
+
+.my-dialog-remove {
+  width: 496px;
+  height: 280px;
+
+  mat-dialog-container {
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  mat-dialog-content {
+    padding: 30px;
+  }
+}
+
+.my_tooltips {
+  background-color: transparent;
+  background-image: url('assets/img/rectangle.svg');
+  text-align: center;
+  width: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.428571px;
+  height: 36px;
+  background-size: cover;
+}
+
+.my_tooltips_disabled {
+  background-color: red;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  background-size: cover;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-start,
+.mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-end {
+  border-radius: 0;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline .mat-form-field-outline-gap {
+  border-radius: 0;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border: 0.5px solid #ddd;
+}
+
+.select_option .mat-form-field-wrapper .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0;
+}
+
+.select_option label.ng-star-inserted {
+  transform: translateY(-0.59375em);
+}
+
+.mat-select-value {
+  transform: translateY(-0.19375em);
+}
+
+.mat-select-panel-class {
+  margin-top: 34px;
+}
+
+.mat-form-field-flex .mat-form-field-infix {
+  padding: 0.4em 0;
+}
+
+label.ng-star-inserted {
+  transform: translateY(-0.59375em);
+}
+
+.mat-chip.mat-standard-chip {
+  border-radius: 0;
+}
+
+.mat-chip-list-wrapper input.mat-input-element,
+.mat-chip-list-wrapper .mat-standard-chip {
+  cursor: pointer;
+  transform: translateY(-0.20375em);
+}
+
+.mat-snack-bar {
+  background-color: #e0004d;
+  color: #fff;
+  .mat-button-wrapper {
+    color: #fff;
+    font-family: Raleway, sans-serif;
+  }
+}
+
+.success-pop-up {
+  color: #fff;
+  background: var(--success-popup);
+
+  .mat-simple-snackbar {
+    justify-content: center;
+  }
+}
+
+.error-pop-up {
+  color: #fff;
+  background: #e0004d;
+
+  .mat-simple-snackbar {
+    justify-content: center;
+  }
+}
+
+:root {
+  --primary-color: #44318D;
+  --primary-color-light: #A64AC9;
+  --secondary-color: #D83F87;
+  --success-popup: #00C8A9;
+  --active-color: #00C8A9;
+  --row-hover: rgba(68,49,141, 5%);
+  --primary-color-disabled: #B29BC7;
+}

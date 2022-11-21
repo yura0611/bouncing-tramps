@@ -1,0 +1,16 @@
+.error_topic {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: red;
+}
+
+.mat_input {
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus-visible {
+    cursor: text;
+  }
+}

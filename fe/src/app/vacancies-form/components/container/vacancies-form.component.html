@@ -1,0 +1,160 @@
+<section class="vacancy-nav">
+  <h2 class="vacancy-title" *ngIf="id">Edit vacancy</h2>
+  <h2 class="vacancy-title" *ngIf="!id">Create vacancy</h2>
+  <ng-container *ngIf="!id">
+    <button
+      type="submit"
+      mat-raised-button
+      class="vacancy-btnsave"
+      form="vacancyID"
+      (click)="saveVacancyForm()"
+      [disabled]="totalTime > 960"
+    >
+      save
+    </button>
+  </ng-container>
+  <ng-container *ngIf="id">
+    <button
+      type="submit"
+      mat-raised-button
+      class="vacancy-btnsave"
+      form="vacancyID"
+      (click)="saveVacancyForm()"
+    >
+      edit
+    </button>
+  </ng-container>
+</section>
+
+<section class="vacancy-container">
+  <form class="row vacancy-container-form" [formGroup]="vacancyForm" id="vacancyID">
+    <div class="input-group" [ngClass]="displayFieldCss('title')">
+      <div class="input-group-info">
+        <label class="input-label">Title</label>
+        <div
+          class="input-error"
+          *ngIf="
+            vacancyForm.get('title')?.hasError('required') && vacancyForm.get('title')?.touched
+          "
+        >
+          Field can't be empty
+        </div>
+        <small class="input-error" *ngIf="vacancyForm!.get('title')?.hasError('minlength')">
+          Field can’t be less than 10 characters
+        </small>
+        <div class="input-error" *ngIf="vacancyForm.get('title')?.hasError('maxlength')">
+          Field can’t be more than 200 characters
+        </div>
+      </div>
+      <input
+        class="input-control"
+        type="text"
+        placeholder="Type vacancy name"
+        formControlName="title"
+        maxlength="200"
+      />
+    </div>
+    <div class="input-group" [ngClass]="displayFieldCss('type')">
+      <div class="input-group-info">
+        <label class="input-label">Type</label>
+        <small
+          class="input-error"
+          *ngIf="vacancyForm.get('type')?.hasError('required') && vacancyForm.get('type')?.touched"
+          >Field can't be empty</small
+        >
+      </div>
+      <select class="input-control" formControlName="type" required>
+        <option value="" disabled selected>Select vacancy type</option>
+        <option value="Web">Web</option>
+        <option value="Management">Management</option>
+        <option value="IOS">IOS</option>
+        <option value="Android">Android</option>
+      </select>
+    </div>
+
+    <div class="input-group" [ngClass]="displayFieldCss('link')">
+      <div class="input-group-info">
+        <label class="input-label">Link</label>
+        <small class="input-error" *ngIf="vacancyForm.get('link')?.hasError('maxlength')">
+          Field can’t be more than 2048 characters
+        </small>
+        <small class="input-error" *ngIf="vacancyForm.get('link')?.hasError('pattern')"
+          >Please enter valid url.</small
+        >
+      </div>
+      <input
+        class="input-control"
+        type="url"
+        formControlName="link"
+        placeholder="Type link"
+        maxlength="2047"
+      />
+    </div>
+
+    <div class="input-group" [ngClass]="displayFieldCss('description')">
+      <div class="input-group-info">
+        <label class="input-label">Description</label>
+        <div
+          class="input-error"
+          *ngIf="
+            vacancyForm.get('description')?.hasError('required') &&
+            vacancyForm.get('description')?.touched
+          "
+        >
+          Field can't be empty
+        </div>
+        <small class="input-error" *ngIf="vacancyForm.get('description')?.hasError('minlength')">
+          Field can’t be less than 10 characters
+        </small>
+      </div>
+      <textarea
+        class="input-control"
+        formControlName="description"
+        placeholder="Type text"
+        maxlength="800"
+        [maxlength]="maxChars"
+      >
+></textarea
+      >
+      <label class="chars">
+        {{ vacancyForm?.value?.description?.length || '0' }}/{{ maxChars }}</label
+      >
+    </div>
+  </form>
+
+  <ng-container *ngIf="!id">
+    <div class="row vacancy-container-task">
+      <app-vacancies-questions-added
+        [items]="questions"
+        (removeItemEvent)="removeItem($event)"
+        [minutes]="totalTime"
+      ></app-vacancies-questions-added>
+    </div>
+    <div class="row vacancy-container-questions">
+      <app-vacancies-questions-list
+        [selectedItems]="vacancyForm.value.questions"
+        (addItemEvent)="addItem($event)"
+      >
+      </app-vacancies-questions-list>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="id">
+    <app-vacancies-edit [itemsEdit]="editQuestion" [minutes]="totalTime"></app-vacancies-edit>
+  </ng-container>
+</section>
+<ng-container *ngIf="isFieldValid('questions')">
+  <div class="error-area">
+    <div class="error">Fields and “Task question” list can't be empty</div>
+  </div>
+</ng-container>
+<ng-container *ngIf="totalTime > 960">
+  <div class="error-area">
+    <div class="error">Total time can't be more than 960 minutes</div>
+  </div>
+</ng-container>
+<ng-container *ngIf="questions.length > 20">
+  <div class="error-area">
+    <div class="error">Can't be more than 20 questions in the list</div>
+  </div>
+</ng-container>

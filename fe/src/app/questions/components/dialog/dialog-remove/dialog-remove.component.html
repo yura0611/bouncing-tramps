@@ -1,0 +1,27 @@
+<div class="dialog">
+  <div mat-dialog-container>
+    <div class="dialog_delete" mat-dialog-title class="dialog_title">
+      <div class="remove_question">Remove Question</div>
+      <div>
+        <mat-icon mat-dialog-close class="icon_brackets fas fa-times">clear</mat-icon>
+      </div>
+    </div>
+    <div class="title_remove" mat-dialog-content>
+      {{ TitleRemove }}
+    </div>
+    <div mat-dialog-actions>
+      <div class="button_remove">
+        <button class="button_cancel" mat-button mat-dialog-close>Cancel</button>
+        <button
+          class="button_delete"
+          mat-dialog-close
+          (click)="deleteQuestion()"
+          mat-stroked-button
+          color="red"
+        >
+          REMOVE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

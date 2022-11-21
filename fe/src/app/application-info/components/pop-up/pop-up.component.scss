@@ -1,0 +1,16 @@
+.pop-up {
+  margin-left: -167px;
+  border-radius: 2px;
+  color: #fff;
+  max-width: 335px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  text-align: center;
+  padding: 12px 30px;
+
+  &__error {
+    background-color: var(--secondary-color);
+    text-align: center;
+  }
+}

@@ -1,0 +1,218 @@
+<div class="container">
+  <section class="vacancy_info">
+    <div class="vacancy__title_wrapper">
+      <h1 class="vacancy__title">
+        <div class="vacancy__title_type">{{ vacancyResponse?.type }}</div>
+        {{ vacancyResponse?.title }}
+      </h1>
+      <div class="buttons_wrapper">
+        <button
+          mat-button
+          color="primary"
+          class="vacancy__buttons vacancy_copy"
+          (click)="copyVacancyLinkToClipboard()"
+        >
+          <mat-icon color="primary">content_copy</mat-icon>
+        </button>
+        <button mat-button color="primary" class="vacancy__buttons vacancy_edit">
+          <mat-icon routerLink="/vacancies/edit/{{ id }}" color="primary">edit</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="vacancy__description_wrapper">
+      <div class="vacancy__status_wrapper vacancy__status_block">
+        <div class="vacancy__status">
+          <p class="vacancy__status_title">Status</p>
+          <h5 *ngIf="vacancyResponse?.isActive" class="vacancy__status_content color-accent">
+            Active
+          </h5>
+          <h5 *ngIf="!vacancyResponse?.isActive" class="vacancy__status_content color-accent">
+            Closed
+          </h5>
+        </div>
+        <button
+          class="vacancy__status-btn"
+          *ngIf="vacancyResponse?.isActive"
+          mat-button
+          (click)="closeVacancy()"
+        >
+          Close
+        </button>
+        <button
+          class="vacancy__status-btn"
+          *ngIf="!vacancyResponse?.isActive"
+          mat-button
+          (click)="openVacancy()"
+        >
+          Re-open
+        </button>
+      </div>
+      <div class="vacancy__completed vacancy__status_block">
+        <p class="vacancy__completed_title">Completed</p>
+        <h5 class="vacancy__completed_content">
+          <div class="vacancy__completed_number-accent color-accent">{{ completed }}</div>
+          out of {{ countApp }}
+        </h5>
+      </div>
+      <div class="opened vacancy__status_block">
+        <p class="vacancy__opened_title">Opened</p>
+        <h5 class="vacancy__opened_content color-accent">
+          {{ vacancyResponse?.createdAt | date: 'd MMM. y' }}
+        </h5>
+      </div>
+    </div>
+  </section>
+  <section class="applications">
+    <div class="applications__title_wrapper">
+      <h1 class="applications__title">Applications</h1>
+      <div class="applications__buttons">
+        <button
+          *ngIf="checkedCount === 0 && vacancyResponse?.isActive"
+          class="icon-btn invite-btn"
+          mat-button
+          (click)="inviteUserToApplication()"
+        >
+          <mat-icon aria-hidden="false" aria-label="Example home icon">person_add</mat-icon>
+          Invite candidate
+        </button>
+        <button
+          *ngIf="!!checkedCount && vacancyResponse?.isActive"
+          class="icon-btn change-btn"
+          mat-button
+          (click)="changeReviewer()"
+        >
+          <mat-icon aria-hidden="false">person</mat-icon>
+          Change reviewer
+        </button>
+
+        <button
+          *ngIf="!!checkedCount"
+          class="icon-btn remove-btn"
+          mat-button
+          (click)="removeApplications()"
+        >
+          <mat-icon aria-hidden="false">delete</mat-icon>
+          Remove All Candidates
+        </button>
+      </div>
+    </div>
+    <div class="applications__wrapper">
+      <table
+        class="applications__list"
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        matSortActive="invited"
+        matSortDirection="desc"
+        matSortDisableClear
+      >
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell no-invited" colspan="9999">No invited candidates</td>
+        </tr>
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              color="primary"
+            >
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? onChangeChecked(row) : null"
+              [checked]="selection.isSelected(row)"
+              [disabled]="row.status === 'Completed' || row.status === 'Evaluated'"
+              color="primary"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Candidate Column -->
+        <ng-container matColumnDef="candidate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>candidate</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.executor.lastName || '--' }} {{ row.executor.firstName || '--' }}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="vacancies-table-style">
+            status
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <span
+              class="vacancies-table-style-status-bg status__column_text"
+              [ngClass]="{
+                'is-invited': row.status === 'Invited',
+                'is-inProgress': row.status === 'In progress',
+                'is-completed': row.status === 'Completed',
+                'is-evaluated': row.status === 'Evaluated'
+              }"
+            >
+              {{ row.status || '----' }}
+            </span>
+          </td>
+        </ng-container>
+        <!-- Score Column -->
+        <ng-container matColumnDef="score">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>score</th>
+          <td mat-cell *matCellDef="let row">
+            <span *ngIf="row.status === 'Evaluated'">{{ row.score | number: '1.0-0' }}%</span>
+            <span *ngIf="row.status !== 'Evaluated'">--</span>
+          </td>
+        </ng-container>
+
+        <!-- reviewer Column -->
+        <ng-container matColumnDef="reviewer">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Reviewer</th>
+          <td mat-cell *matCellDef="let row" class="blue_text">
+            {{ row.reviewer?.firstName }} {{ row.reviewer?.lastName
+            }}<mat-icon
+              (click)="changeReviewer(row._id)"
+              class="edit"
+              *ngIf="
+                vacancyResponse?.isActive && row.status !== 'Completed' && row.status !== 'Evaluated'
+              "
+              aria-hidden="false"
+              >edit</mat-icon
+            >
+          </td>
+        </ng-container>
+        <!-- reviewer change -->
+        <ng-container matColumnDef="invited">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>invited</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.createdAt | date: 'd MMM, y' || '----'
+            }}<mat-icon
+              aria-hidden="false"
+              class="arrow"
+              [routerLink]="row._id"
+              *ngIf="row.status === 'Completed' || row.status === 'Evaluated'"
+            >
+              arrow_forward</mat-icon
+            >
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <!-- (click)="selection.toggle(row)" -->
+      </table>
+      <mat-paginator
+        [hidden]="!dataSource.data.length"
+        #paginator
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]"
+        class="paginator"
+      ></mat-paginator>
+    </div>
+  </section>
+</div>
+<app-pop-up *ngIf="isPopupShowed" [success]="popupStatus" [message]="currentMessage"></app-pop-up>
+<router-outlet></router-outlet>

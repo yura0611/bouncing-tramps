@@ -1,0 +1,45 @@
+<div class="vacancies-table mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="vacancy">
+      <th class="vacancies-table-style" mat-header-cell *matHeaderCellDef mat-sort-header>
+        vacancy
+      </th>
+      <td mat-cell *matCellDef="let row">{{ row.vacancy.title }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="type">
+      <th class="vacancies-table-style" mat-header-cell *matHeaderCellDef mat-sort-header>type</th>
+      <td mat-cell *matCellDef="let row">{{ row.vacancy.type }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="candidate">
+      <th class="vacancies-table-style" mat-header-cell *matHeaderCellDef mat-sort-header>
+        candidate
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.executor.firstName }} {{ row.executor.lastName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="opened">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="vacancies-table-style">
+        completed
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.updatedAt | date: 'd MMM y'
+        }}<mat-icon aria-hidden="false" class="arrow" [routerLink]="row._id"
+          >arrow_right_alt</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <ng-container>
+      <th class="empty-message" *matNoDataRow [attr.colspan]="4">No vacancies for review</th>
+    </ng-container>
+  </table>
+</div>

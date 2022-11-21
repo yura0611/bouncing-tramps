@@ -1,0 +1,8 @@
+.eslintrc.json
+.eslintcache
+.prettierignore
+.prettierrc.json
+.idea
+.husky
+docs
+*.tgz

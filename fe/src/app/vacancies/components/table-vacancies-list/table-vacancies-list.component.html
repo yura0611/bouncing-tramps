@@ -1,0 +1,50 @@
+<div class="vacancies-table mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef class="vacancies-table-style" mat-sort-header>
+        vacancy
+      </th>
+      <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="vacancies-table-style">type</th>
+      <td mat-cell *matCellDef="let row">{{ row.type }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="vacancies-table-style">
+        status
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <span
+          class="vacancies-table-style-status-bg"
+          [ngClass]="{
+            'is-active': row.isActive === true,
+            'is-closed': row.isActive === false
+          }"
+          >{{ row.isActive ? 'ACTIVE' : 'CLOSED' }}</span
+        >
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="vacancies-table-style">
+        opened
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.createdAt | date: 'dd MMM yyyy'
+        }}<mat-icon aria-hidden="false" class="arrow" [routerLink]="row._id"
+          >arrow_right_alt</mat-icon
+        >
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <ng-container>
+      <th class="empty-message" *matNoDataRow [attr.colspan]="4">No vacancies yet</th>
+    </ng-container>
+  </table>
+</div>

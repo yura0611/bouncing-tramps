@@ -1,0 +1,28 @@
+<div class="dialog-header">
+  <p mat-dialog-title class="dialog-title">{{ data.title }}</p>
+  <div (click)="onClose()" class="closeButton">
+    <mat-icon mat-dialog-close aria-hidden="false">close</mat-icon>
+  </div>
+</div>
+<div class="dialog-inner">
+  <div mat-dialog-content>
+    <ng-template #target></ng-template>
+  </div>
+  <div mat-dialog-actions class="dialog-buttons">
+    <div *ngIf="data?.modalType === 'confirmModal'">
+      <button mat-button (click)="cancel()" class="cancelButton btn">
+        {{ data.cancelText }}
+      </button>
+      <button mat-button (click)="confirm()" class="confirmButton btn" type="submit">
+        {{ data.confirmText }}
+      </button>
+    </div>
+    <div *ngIf="data?.modalType === 'saveModal'">
+      <button mat-button (click)="save()" class="saveButton btn">
+        {{ data.confirmText }}
+      </button>
+    </div>
+    <!-- for question view mode or mark modal, so there is no buttons needed -->
+    <div *ngIf="data?.modalType === 'questionViewModal'"></div>
+  </div>
+</div>

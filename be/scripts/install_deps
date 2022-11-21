@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Install node.js
+cd /home/recruiter-app/
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install 16
+node -e "console.log('Running Node.js ' + process.version)"
+
+npm install pm2@latest -g
+npm install
+npm run docs
+
+# Install apache
+rm -rf /etc/httpd/conf/httpd.conf
+yum -y reinstall httpd
+
+# Set up proxy for Node server
+cat <<EOT >> /etc/httpd/conf/httpd.conf
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+
+ProxyRequests Off
+ProxyPass / http://localhost:8082/
+ProxyPassReverse / http://localhost:8082/
+
+<Location "/">
+  Order allow,deny
+  Allow from all
+</Location>
+EOT
